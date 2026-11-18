@@ -9,7 +9,7 @@ scan_timeout = 100
 command_timeout = 1500
 add_newline = true
 
-format = "$status$directory$git_branch$git_status$cmd_duration "
+format = "$status$directory$git_branch$git_status$dotnet$python$cmd_duration "
 
 [status]
 disabled = false
@@ -34,3 +34,15 @@ format = "([ $all_status$ahead_behind ](bg:#e5c07b fg:#1e2127)[](fg:#e5c07b))
 [cmd_duration]
 min_time = 2000
 format = "[  $duration ](bg:#5c6370 fg:#dcdfe4)[](fg:#5c6370)"
+
+# Shown only in a folder holding the marker files; see the README's Prompt section.
+[dotnet]
+symbol = "󰪮 "
+format = "[ $symbol$version( $tfm) ](bg:#c678dd fg:#1e2127)[](fg:#c678dd)"
+
+[python]
+symbol = " "
+# A uv project's .venv first: uv runs it without activating, so the PATH python is the wrong version.
+python_binary = [".venv/Scripts/python.exe", "python"]
+format = "[ $symbol$version( $virtualenv) ](bg:#c678dd fg:#1e2127)[](fg:#c678dd)"
+

@@ -64,6 +64,22 @@ Nothing slow runs before the first prompt:
 `Windows PowerShell` gets the prompt and line editing; completion and the commands above are pwsh
 7.4 and up.
 
+## Prompt
+
+Agnoster-style segments (`starship.toml`), each shown only when it has something to say: a failed
+command's exit code, the folder, the git branch, uncommitted changes, the .NET or Python version,
+and how long the last command took when it was 2 s or more.
+
+The language segments come from files in the folder the terminal is in, not from an editor:
+
+- **.NET** shows in a folder with a `.sln`/`.slnx`, a project file, `global.json` or
+  `Directory.Build.props`. The SDK version comes from `global.json` without running dotnet. The
+  target framework only appears in a folder whose project file sets `<TargetFramework>` itself.
+- **Python** shows in a folder with `pyproject.toml`, `.python-version`, `requirements.txt` or `.py`
+  files. The version is the project's `.venv` Python when there is one (uv runs it without
+  activating), else the `python` on PATH; it costs about 60 ms a prompt there. An activated venv
+  adds its name.
+
 ## Fonts
 
 The prompt uses Nerd Font glyphs and never emoji (`starship.toml`). An emoji's width differs between
