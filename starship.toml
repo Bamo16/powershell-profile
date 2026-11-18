@@ -9,7 +9,7 @@ scan_timeout = 100
 command_timeout = 1500
 add_newline = true
 
-# The directory is always first, so it opens without an arrow and every later segment has a predecessor.
+# The directory is always first, so every later segment has a predecessor for prev_bg.
 format = "$directory$git_branch$git_status$dotnet$python$status$cmd_duration[](fg:prev_bg) "
 
 [directory]
@@ -18,7 +18,9 @@ truncate_to_repo = true
 truncation_symbol = ""
 home_symbol = "~"
 read_only = " "
-format = "[ $path$read_only ](bg:#61afef fg:#1e2127)"
+# Opens with an arrow-shaped notch: the inverse arrow cut out of the segment colour, so it matches any
+# terminal background.
+format = "[](fg:#61afef)[ $path$read_only ](bg:#61afef fg:#1e2127)"
 
 [git_branch]
 symbol = " "
