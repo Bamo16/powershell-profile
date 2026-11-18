@@ -62,6 +62,24 @@ if (-not (Get-Command -Name starship -CommandType Application -ErrorAction Ignor
         --accept-package-agreements --accept-source-agreements
 }
 
+# Windows Terminal reads every fragment in this folder at startup; a junction keeps it in step with the
+# repository, and needs no elevation.
+$fragments = Join-Path -Path $env:LOCALAPPDATA -ChildPath 'Microsoft\Windows Terminal\Fragments\powershell-profile'
+$fragmentSource = Join-Path -Path $PSScriptRoot -ChildPath 'terminal'
+$existing = Get-Item -LiteralPath $fragments -Force -ErrorAction Ignore
+if ($existing -and -not $existing.LinkType) {
+    Write-Warning -Message "$fragments is a real folder, not a link; move it aside to install the fragment."
+} elseif ($existing.Target -ne $fragmentSource -and
+    $PSCmdlet.ShouldProcess($fragments, 'Link to the Windows Terminal fragment')) {
+    if ($existing) {
+        # Deletes the link alone, never what it points to.
+        [System.IO.Directory]::Delete($fragments)
+    }
+
+    $null = New-Item -ItemType Directory -Path (Split-Path -Path $fragments -Parent) -Force
+    $null = New-Item -ItemType Junction -Path $fragments -Target $fragmentSource
+}
+
 foreach ($module in 'posh-git', 'Terminal-Icons') {
     if (-not (Get-Module -Name $module -ListAvailable) -and
         $PSCmdlet.ShouldProcess($module, 'Install-PSResource')) {

@@ -26,6 +26,17 @@ are missing.
 Set the terminal font to **CaskaydiaCove Nerd Font Mono** in Windows Terminal (Settings > Defaults >
 Appearance) and VS Code (`terminal.integrated.fontFamily`).
 
+pwsh is the MSIX package, which is what winget installs from 7.7 on (there is no 7.7 MSI). Keep only
+one pwsh installed: with two, `pwsh` is whichever comes first on PATH.
+
+## Windows Terminal
+
+`terminal/powershell-profile.json` is a Terminal fragment, linked into Terminal's Fragments folder by
+`install.ps1`. It gives the PowerShell profiles the One Half Dark colours the prompt is drawn from, and
+adds a **PowerShell (Admin)** profile, which opens in its own elevated window. Terminal reads it at
+startup. Global settings such as the default profile and key bindings can't come from a fragment, so
+they stay in Terminal's own settings.
+
 ## Updating
 
 Once a week, after the prompt is up, a hidden process fetches this repository. When there is

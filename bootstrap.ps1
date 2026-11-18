@@ -29,8 +29,9 @@
     }
 
     $git = Get-Tool -Name git -WingetId Git.Git -DefaultPath "$env:ProgramFiles\Git\cmd\git.exe"
+    # From 7.7 winget installs pwsh as an MSIX package (there is no MSI), reached through an app alias.
     $pwsh = Get-Tool -Name pwsh -WingetId Microsoft.PowerShell `
-        -DefaultPath "$env:ProgramFiles\PowerShell\7\pwsh.exe"
+        -DefaultPath "$env:LOCALAPPDATA\Microsoft\WindowsApps\pwsh.exe"
 
     $destination = $env:PROFILE_REPO_PATH
     if (-not $destination) {
