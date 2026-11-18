@@ -2,6 +2,16 @@
 
 $env:STARSHIP_CONFIG = Join-Path -Path $ProfileInfo.Root -ChildPath 'starship.toml'
 
+# starship.toml shows the elevated segment when this is set. Checked once here, because a starship
+# module that checks would start a process at every prompt.
+$identity = [System.Security.Principal.WindowsPrincipal][System.Security.Principal.WindowsIdentity]::GetCurrent()
+$env:PROMPT_ELEVATED = $null
+if ($identity.IsInRole([System.Security.Principal.WindowsBuiltInRole]::Administrator)) {
+    $env:PROMPT_ELEVATED = '1'
+}
+
+Remove-Variable -Name identity
+
 # Searching PATH costs tens of milliseconds, so where starship was found last time is remembered.
 $starshipLocation = Join-Path -Path $ProfileInfo.StateDirectory -ChildPath 'starship-path.txt'
 $starship = Get-Content -LiteralPath $starshipLocation -TotalCount 1 -ErrorAction Ignore

@@ -1,7 +1,7 @@
 #Requires -RunAsAdministrator
 <#
 .SYNOPSIS
-    Installs every style of CaskaydiaCove Nerd Font Mono for all users.
+    Installs every style of CaskaydiaCove Nerd Font Mono for all users, skipping any already installed.
 .DESCRIPTION
     Machine-wide on purpose: a font installed for one user only is invisible to some programs, which
     is a classic cause of a font that works in one terminal and not another. install.ps1 runs this
@@ -26,6 +26,13 @@ try {
     Expand-Archive -LiteralPath $archive -DestinationPath $workDirectory
 
     foreach ($font in Get-ChildItem -LiteralPath $workDirectory -Filter 'CaskaydiaCoveNerdFontMono-*.ttf') {
+        # An installed style is in use by every program showing it, so it can't be replaced; keep it.
+        if (Test-Path -LiteralPath (Join-Path -Path $fontsDirectory -ChildPath $font.Name)) {
+            Write-Verbose -Message "$($font.Name) is already installed."
+
+            continue
+        }
+
         if ($PSCmdlet.ShouldProcess($font.Name, 'Install font')) {
             Copy-Item -LiteralPath $font.FullName -Destination $fontsDirectory -Force
             # 'CaskaydiaCoveNerdFontMono-BoldItalic' becomes 'CaskaydiaCove Nerd Font Mono BoldItalic'.

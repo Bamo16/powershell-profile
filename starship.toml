@@ -9,8 +9,12 @@ scan_timeout = 100
 command_timeout = 1500
 add_newline = true
 
-# The directory is always first, so every later segment has a predecessor for prev_bg.
-format = "$directory$git_branch$git_status$dotnet$python$status$cmd_duration[](fg:prev_bg) "
+# The directory is always present, so every segment after it has a predecessor for prev_bg.
+format = "${env_var.PROMPT_ELEVATED}$directory$git_branch$git_status$dotnet$python$status$cmd_duration[](fg:prev_bg) "
+
+# Shown in an elevated session. src/Prompt.ps1 sets the variable once at startup.
+[env_var.PROMPT_ELEVATED]
+format = "[](fg:#d19a66)[  ](bg:#d19a66 fg:#1e2127)"
 
 [directory]
 truncation_length = 3
@@ -18,9 +22,9 @@ truncate_to_repo = true
 truncation_symbol = ""
 home_symbol = "~"
 read_only = " "
-# Opens with an arrow-shaped notch: the inverse arrow cut out of the segment colour, so it matches any
-# terminal background.
-format = "[](fg:#61afef)[ $path$read_only ](bg:#61afef fg:#1e2127)"
+# Opens with an arrow-shaped notch: the inverse arrow cut out of the segment colour. With nothing
+# before it the notch shows the terminal background; after the elevated segment, that segment's colour.
+format = "[](fg:#61afef bg:prev_bg)[ $path$read_only ](bg:#61afef fg:#1e2127)"
 
 [git_branch]
 symbol = " "

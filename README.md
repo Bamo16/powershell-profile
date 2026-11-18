@@ -67,7 +67,7 @@ Nothing slow runs before the first prompt:
 ## Prompt
 
 Agnoster-style segments (`starship.toml`), each shown only when it has something to say: a failed
-command's exit code, the folder, the git branch, uncommitted changes, the .NET or Python version,
+command's exit code, an orange bolt in an elevated (admin) session, the folder, the git branch, uncommitted changes, the .NET or Python version,
 and how long the last command took when it was 2 s or more.
 
 The language segments come from files in the folder the terminal is in, not from an editor:
