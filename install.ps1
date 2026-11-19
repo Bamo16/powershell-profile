@@ -1,4 +1,4 @@
-#Requires -Version 7.4
+#Requires -Version 7.6
 <#
 .SYNOPSIS
     Points pwsh and Windows PowerShell at this repository's profile and installs what it uses.
@@ -13,6 +13,7 @@
 param()
 
 $ErrorActionPreference = 'Stop'
+$PSNativeCommandUseErrorActionPreference = $true
 $marker = '# Managed by powershell-profile.'
 $documents = [Environment]::GetFolderPath('MyDocuments')
 $entryPoint = Join-Path -Path $PSScriptRoot -ChildPath 'profile.ps1'
@@ -87,9 +88,8 @@ foreach ($module in 'posh-git', 'Terminal-Icons') {
     }
 }
 
-$fontInstalled = Get-ItemProperty -LiteralPath 'HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Fonts' |
-    Get-Member -MemberType NoteProperty |
-    Where-Object -Property Name -Like 'CaskaydiaCove Nerd Font Mono*'
+$fonts = Get-ItemProperty -LiteralPath 'HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Fonts'
+$fontInstalled = $fonts.PSObject.Properties.Name -like 'CaskaydiaCove Nerd Font Mono*'
 if (-not $fontInstalled -and $PSCmdlet.ShouldProcess('CaskaydiaCove Nerd Font Mono', 'Install machine-wide')) {
     $fontScript = Join-Path -Path $PSScriptRoot -ChildPath 'tools\Install-NerdFont.ps1'
     Start-Process -FilePath (Get-Process -Id $PID).Path -Verb RunAs -Wait -ArgumentList @(

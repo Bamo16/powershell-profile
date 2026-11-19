@@ -1,9 +1,9 @@
 BeforeAll {
     $Global:ProfileInfo = [pscustomobject]@{
-        Root = Split-Path -Path $PSScriptRoot
+        Root           = Split-Path -Path $PSScriptRoot
         StateDirectory = Join-Path -Path $TestDrive -ChildPath 'state'
-        Timings = [System.Collections.Generic.List[pscustomobject]]::new()
-        Deferred = [System.Collections.Generic.List[scriptblock]]::new()
+        Timings        = [System.Collections.Generic.List[pscustomobject]]::new()
+        Deferred       = [System.Collections.Generic.List[scriptblock]]::new()
     }
     . (Join-Path -Path $ProfileInfo.Root -ChildPath 'src\Core.ps1')
 }

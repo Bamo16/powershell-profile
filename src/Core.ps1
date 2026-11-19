@@ -30,6 +30,7 @@ function Test-InteractiveSession {
     foreach ($argument in $Arguments | Select-Object -Skip 1) {
         if ($skipValue) {
             $skipValue = $false
+
             continue
         }
 
@@ -46,7 +47,7 @@ function Test-InteractiveSession {
         } elseif ('command'.StartsWith($name) -or 'file'.StartsWith($name) -or
             'encodedcommand'.StartsWith($name) -or $name -eq 'ec') {
             return $noExit
-        } elseif ($valueParameters | Where-Object -FilterScript { $_.StartsWith($name) }) {
+        } elseif ($valueParameters.Where({ $_.StartsWith($name) }, 'First')) {
             $skipValue = $true
         }
     }
@@ -66,7 +67,7 @@ function Add-ProfileTiming {
     )
 
     $ProfileInfo.Timings.Add([pscustomobject]@{
-            Part = $Name
+            Part         = $Name
             Milliseconds = [math]::Round($Stopwatch.Elapsed.TotalMilliseconds, 1)
         })
 }

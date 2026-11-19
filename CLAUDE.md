@@ -10,7 +10,7 @@ changing it.
   shell) skips the profile, so `Measure-ProfileLoad` must run in a terminal too.
 - **Two editions.** `profile.ps1`, `bootstrap.ps1` and `src/Core.ps1`, `Console.ps1`, `Prompt.ps1`
   load in Windows PowerShell 5.1: 5.1 syntax and ASCII only (the style tests check both). The
-  other `src` parts, `install.ps1` and `tools/` are pwsh 7.4+.
+  other `src` parts, `install.ps1` and `tools/` are pwsh 7.6+.
 - **Scope.** Each `src` part is dot-sourced into the global scope. Clean up temporary variables
   with `Remove-Variable`; work queued with `Invoke-WhenIdle` runs in its own scope, so it imports
   with `-Global`.

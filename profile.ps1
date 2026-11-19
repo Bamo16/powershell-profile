@@ -1,14 +1,14 @@
 <#
     Entry point, dot-sourced by the stub install.ps1 writes to $PROFILE.CurrentUserAllHosts for both
     pwsh and Windows PowerShell. This file, Core, Console and Prompt load in Windows PowerShell too, so
-    they stay 5.1 compatible; the other parts load only in pwsh 7.4 and up.
+    they stay 5.1 compatible; the other parts load only in pwsh 7.6 and up.
 #>
 
 $Global:ProfileInfo = [pscustomobject]@{
-    Root = $PSScriptRoot
+    Root           = $PSScriptRoot
     StateDirectory = Join-Path -Path $env:LOCALAPPDATA -ChildPath 'powershell-profile'
-    Timings = [System.Collections.Generic.List[pscustomobject]]::new()
-    Deferred = [System.Collections.Generic.List[scriptblock]]::new()
+    Timings        = [System.Collections.Generic.List[pscustomobject]]::new()
+    Deferred       = [System.Collections.Generic.List[scriptblock]]::new()
 }
 
 . (Join-Path -Path $PSScriptRoot -ChildPath 'src\Core.ps1')
@@ -24,9 +24,9 @@ if (-not $isInteractive) {
     return
 }
 
-# Windows PowerShell gets the prompt and line editing; the rest is written for pwsh 7.4 and up.
+# Windows PowerShell gets the prompt and line editing; the rest is written for pwsh 7.6 and up.
 $parts = @('Console', 'Prompt')
-if ($PSVersionTable.PSVersion -ge [version]'7.4') {
+if ($PSVersionTable.PSVersion -ge [version]'7.6') {
     $parts += 'Completion', 'Commands', 'Update'
 }
 

@@ -1,4 +1,4 @@
-#Requires -Version 7.4
+#Requires -Version 7.6
 <#
 .SYNOPSIS
     Prints how each of starship's preset prompts looks here, in this terminal and font.
@@ -20,6 +20,7 @@ param(
 )
 
 $ErrorActionPreference = 'Stop'
+$PSNativeCommandUseErrorActionPreference = $true
 $workDirectory = Join-Path -Path ([System.IO.Path]::GetTempPath()) -ChildPath "starship-presets-$PID"
 $null = New-Item -ItemType Directory -Path $workDirectory
 $current = $env:STARSHIP_CONFIG

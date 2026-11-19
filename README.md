@@ -73,7 +73,7 @@ Nothing slow runs before the first prompt:
 - **Scripts get none of it**: `pwsh -Command`, `-File` and redirected sessions skip the profile.
 
 `Windows PowerShell` gets the prompt and line editing; completion and the commands above are pwsh
-7.4 and up.
+7.6 and up.
 
 ## Prompt
 

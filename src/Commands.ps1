@@ -60,8 +60,8 @@ function Measure-ProfileLoad {
 
         $sorted = $runs | Sort-Object
         [pscustomobject]@{
-            Profile = $withProfile
-            MedianMs = [math]::Round($sorted[[math]::Floor($Count / 2)])
+            Profile   = $withProfile
+            MedianMs  = [math]::Round($sorted[[math]::Floor($Count / 2)])
             FastestMs = [math]::Round($sorted[0])
             SlowestMs = [math]::Round($sorted[-1])
         }
@@ -86,10 +86,8 @@ function Enter-Repository {
 
                 $names = (Get-ChildItem -LiteralPath (Get-RepositoryRoot) -Directory).Name
                 # Prefix matches first, then names that only contain what was typed.
-                @($names | Where-Object -FilterScript { $_ -like "$wordToComplete*" }) +
-                @($names | Where-Object -FilterScript {
-                        $_ -like "?*$wordToComplete*" -and $_ -notlike "$wordToComplete*"
-                    })
+                @($names -like "$wordToComplete*") +
+                @($names -like "?*$wordToComplete*" -notlike "$wordToComplete*")
             })]
         [string]$Name
     )
@@ -109,7 +107,7 @@ function Enter-Repository {
     }
 
     # A partial name works too, when it matches exactly one repository.
-    $matching = @(Get-ChildItem -LiteralPath $root -Directory | Where-Object -Property Name -Like "*$Name*")
+    $matching = @(Get-ChildItem -LiteralPath $root -Directory).Where{ $_.Name -like "*$Name*" }
     switch ($matching.Count) {
         1 { Set-Location -LiteralPath $matching[0].FullName }
         0 { Write-Error -Message "No repository under $root matches '$Name'." }

@@ -10,10 +10,10 @@ Remove-Variable -Name utf8
 # The ISE has no PSReadLine.
 if ($readLine = Get-Module -Name PSReadLine) {
     $readLineOptions = @{
-        HistoryNoDuplicates = $true
-        MaximumHistoryCount = 10000
+        HistoryNoDuplicates           = $true
+        MaximumHistoryCount           = 10000
         HistorySearchCursorMovesToEnd = $true
-        BellStyle = 'None'
+        BellStyle                     = 'None'
     }
 
     # Windows PowerShell ships PSReadLine 2.0, which has no predictions; plugins need pwsh 7.2.

@@ -2,7 +2,7 @@
   // The analyzer reads the settings file; the formatter only reads these, so they mirror it.
   "powershell.scriptAnalysis.settingsPath": "PSScriptAnalyzerSettings.psd1",
   "powershell.codeFormatting.preset": "OTBS",
-  "powershell.codeFormatting.alignPropertyValuePairs": false,
+  "powershell.codeFormatting.alignPropertyValuePairs": true,
   "powershell.codeFormatting.pipelineIndentationStyle": "IncreaseIndentationForFirstPipeline",
   "powershell.codeFormatting.useCorrectCasing": true,
   "powershell.codeFormatting.whitespaceBetweenParameters": true,
